@@ -51,15 +51,33 @@ jobs:
         id: props
         run: echo "mc=$(grep -E '^mc_version=' gradle.properties | cut -d= -f2)" >> "$GITHUB_OUTPUT"
 
-      - name: Publish to GitHub Releases, CurseForge, and Modrinth
+      # GitHub-only escape hatch: if the release notes contain [skip-stores], the jar is
+      # still attached to the GitHub Release but CurseForge/Modrinth are skipped. Use this
+      # when that version was already published to the stores (an empty id makes mc-publish
+      # skip that platform).
+      - name: Decide store targets
+        id: targets
+        env:
+          BODY: ${{ github.event.release.body }}
+        run: |
+          if printf '%s' "$BODY" | grep -qiF '[skip-stores]'; then
+            echo "Release marked [skip-stores]: uploading to the GitHub Release only, skipping CurseForge/Modrinth."
+            echo "cf=" >> "$GITHUB_OUTPUT"
+            echo "mr=" >> "$GITHUB_OUTPUT"
+          else
+            echo "cf=1590300" >> "$GITHUB_OUTPUT"
+            echo "mr=ae2-no-byproduct" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish (GitHub always; CurseForge/Modrinth unless skipped)
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-          curseforge-id: 1590300
+          curseforge-id: ${{ steps.targets.outputs.cf }}
           curseforge-token: ${{ secrets.CF_API_TOKEN }}
 
-          modrinth-id: ae2-no-byproduct
+          modrinth-id: ${{ steps.targets.outputs.mr }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
           # The compiled mod jar (excludes any -sources / -dev jars).

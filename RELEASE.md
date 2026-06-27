@@ -15,6 +15,10 @@ Publishing is automated. When you publish a GitHub Release, the [`release.yml`](
    - **Publish release.**
 7. Watch the **Actions** tab. The `release.yml` run builds and publishes the jar to GitHub, CurseForge, and Modrinth with that changelog.
 
+## GitHub-only release (skip CurseForge / Modrinth)
+
+If that version is already on CurseForge and Modrinth (or you only want it attached to the GitHub Release), put `[skip-stores]` anywhere in the release notes. The workflow still builds and attaches the jar to the GitHub Release, but skips both stores. Handy for backfilling a GitHub Release for a version that was uploaded to the stores manually.
+
 ## Keeping the published metadata correct
 
 - **Version match is enforced.** Before building or publishing, the release workflow fails if the git tag does not match `gradle.properties` `mod_version` (ignoring a leading `v`). The published file and the release label are therefore always the same version.
