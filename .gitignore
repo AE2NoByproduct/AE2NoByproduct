@@ -1,0 +1,11 @@
+build/
+.gradle/
+run/
+run-server/
+*.classpath
+*.project
+.idea/
+*.iml
+
+# OMC operational state (not project artifacts)
+.omc/

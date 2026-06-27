@@ -1,0 +1,56 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '6.0.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
+    id 'java'
+}
+
+version = project.mod_version
+group = 'dev.nilsenkonsult.ae2nobyproduct'
+base { archivesName = project.mod_id }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: project.mc_version
+    copyIdeResources = true
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'info'
+            mods { "${project.mod_id}" { source sourceSets.main } }
+        }
+        server {
+            workingDirectory project.file('run-server')
+            property 'forge.logging.console.level', 'info'
+            mods { "${project.mod_id}" { source sourceSets.main } }
+        }
+    }
+}
+
+mixin {
+    add sourceSets.main, "${project.mod_id}.refmap.json"
+    config "${project.mod_id}.mixins.json"
+}
+
+repositories {
+    maven { url 'https://cursemaven.com' }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    // AE2 — not on Maven Central; resolved via CurseMaven.
+    // project applied-energistics-2 = 223794, file 7148487 = appliedenergistics2-forge-15.4.10.jar
+    compileOnly fg.deobf("curse.maven:applied-energistics-2-223794:7148487")
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test { useJUnitPlatform() }
+
+tasks.named('processResources', ProcessResources).configure {
+    var props = [version: project.mod_version, mc_version: project.mc_version]
+    inputs.properties props
+    filesMatching('META-INF/mods.toml') { expand props }
+}
