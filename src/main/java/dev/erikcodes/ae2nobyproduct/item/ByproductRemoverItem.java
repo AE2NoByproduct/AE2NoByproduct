@@ -110,6 +110,10 @@ public class ByproductRemoverItem extends Item {
             GenericStack[] sparseInputs = processing.getSparseInputs();
             ItemStack reencoded = PatternDetailsHelper.encodeProcessingPattern(
                 sparseInputs, new GenericStack[] { firstOutput });
+            // Never overwrite a valid pattern with a failed/empty encode — leave it untouched.
+            if (reencoded == null || reencoded.isEmpty()) {
+                continue;
+            }
             inv.setItemDirect(slot, reencoded);
             cleaned++;
         }
