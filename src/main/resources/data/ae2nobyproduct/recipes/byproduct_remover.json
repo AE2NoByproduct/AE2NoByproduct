@@ -1,21 +1,10 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " R ",
-    "RPR",
-    " I "
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "ae2:item_storage_cell_16k" },
+    { "item": "ae2:blank_pattern" },
+    { "item": "ae2:crafting_unit" }
   ],
-  "key": {
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "P": {
-      "item": "ae2:blank_pattern"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    }
-  },
   "result": {
     "item": "ae2nobyproduct:byproduct_remover"
   }

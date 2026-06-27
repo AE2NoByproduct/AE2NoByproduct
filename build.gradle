@@ -53,6 +53,12 @@ dependencies {
     // AE2 Wireless Terminals (ae2wtlib) — wireless + universal pattern terminals, for testing
     // addon compatibility. Dev-runtime only. project 459929 / file 7251206 (ae2wtlib-15.3.3-forge).
     runtimeOnly fg.deobf("curse.maven:applied-energistics-2-wireless-terminals-459929:7251206")
+
+    // --- Addon mods (dev-runtime only) for testing the Byproduct Remover against addon pattern
+    // providers. Resolved via CurseMaven so they are properly deobfuscated for the dev runtime. ---
+    runtimeOnly fg.deobf("curse.maven:mega-cells-622112:6175008")           // Mega Cells 2.4.6
+    runtimeOnly fg.deobf("curse.maven:ex-pattern-provider-892005:7986603")  // Extended AE 1.4.15
+    runtimeOnly fg.deobf("curse.maven:expanded-ae-1213351:8048572")         // Expanded AE 1.4.1.b
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
