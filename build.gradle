@@ -42,7 +42,11 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     // AE2 — not on Maven Central; resolved via CurseMaven.
     // project applied-energistics-2 = 223794, file 7148487 = appliedenergistics2-forge-15.4.10.jar
-    compileOnly fg.deobf("curse.maven:applied-energistics-2-223794:7148487")
+    // implementation (not compileOnly) so AE2 is present + loaded as a mod at dev runtime (runClient).
+    implementation fg.deobf("curse.maven:applied-energistics-2-223794:7148487")
+    // GuideME — AE2 15.4.x hard-depends on it ([20.1.7,20.2.0)). Dev-runtime only: our mod never
+    // references it and production packs already ship it. guideme-20.1.14, project 1173950 / file 7127447.
+    runtimeOnly fg.deobf("curse.maven:guideme-1173950:7127447")
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
