@@ -43,7 +43,7 @@ public class ByproductRemoverItem extends Item {
         }
 
         if (!Config.enableFeature()) {
-            player.displayClientMessage(Component.translatable("message.ae2nobyproduct.disabled"), false);
+            notify(player, "message.ae2nobyproduct.disabled");
             return InteractionResult.CONSUME;
         }
 
@@ -58,16 +58,22 @@ public class ByproductRemoverItem extends Item {
             // Persist the edited inventory and notify the provider's grid logic.
             provider.getLogic().saveChanges();
             provider.setChanged();
-            player.displayClientMessage(
-                Component.translatable("message.ae2nobyproduct.removed", cleaned), false);
+            notify(player, "message.ae2nobyproduct.removed", cleaned);
             if (Config.consumeOnUse()) {
                 context.getItemInHand().shrink(1);
             }
         } else {
-            player.displayClientMessage(Component.translatable("message.ae2nobyproduct.none"), false);
+            notify(player, "message.ae2nobyproduct.none");
         }
 
         return InteractionResult.CONSUME;
+    }
+
+    /** Sends a chat message to the player, unless messages are disabled in the config. */
+    private static void notify(Player player, String key, Object... args) {
+        if (Config.showMessages()) {
+            player.displayClientMessage(Component.translatable(key, args), false);
+        }
     }
 
     /**

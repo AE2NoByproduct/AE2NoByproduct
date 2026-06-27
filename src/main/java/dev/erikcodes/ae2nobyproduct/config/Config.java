@@ -8,6 +8,7 @@ public final class Config {
     private static final ForgeConfigSpec.BooleanValue ALLOW_PLAYER_TOGGLE;
     private static final ForgeConfigSpec.BooleanValue DEFAULT_STRIP;
     private static final ForgeConfigSpec.BooleanValue CONSUME_ON_USE;
+    private static final ForgeConfigSpec.BooleanValue SHOW_MESSAGES;
 
     static {
         ForgeConfigSpec.Builder b = new ForgeConfigSpec.Builder();
@@ -19,6 +20,8 @@ public final class Config {
                 .define("defaultStrip", false);
         CONSUME_ON_USE = b.comment("If true, the Byproduct Remover item is consumed (shrinks by 1) after successfully cleaning at least one pattern.")
                 .define("consumeOnUse", false);
+        SHOW_MESSAGES = b.comment("If true, the Byproduct Remover item sends chat feedback messages when used.")
+                .define("showMessages", true);
         SPEC = b.build();
     }
     private Config() {}
@@ -26,4 +29,5 @@ public final class Config {
     public static boolean allowPlayerToggle() { return ALLOW_PLAYER_TOGGLE.get(); }
     public static boolean defaultStrip() { return DEFAULT_STRIP.get(); }
     public static boolean consumeOnUse() { return CONSUME_ON_USE.get(); }
+    public static boolean showMessages() { return SHOW_MESSAGES.get(); }
 }

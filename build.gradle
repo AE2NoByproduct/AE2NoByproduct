@@ -62,7 +62,10 @@ dependencies {
     // providers. Resolved via CurseMaven so they are properly deobfuscated for the dev runtime. ---
     runtimeOnly fg.deobf("curse.maven:mega-cells-622112:6175008")           // Mega Cells 2.4.6
     runtimeOnly fg.deobf("curse.maven:ex-pattern-provider-892005:7986603")  // Extended AE 1.4.15
-    runtimeOnly fg.deobf("curse.maven:expanded-ae-1213351:8048572")         // Expanded AE 1.4.1.b
+    // Expanded AE disabled in dev: its mod class fails to construct under this dev's Forge 47.3.0
+    // ("NoSuchMethodException: lu.kolja.expandedae.Expandedae.<init>()"), which aborts the whole client.
+    // Not our bug; test Expanded AE in the full pack instead.
+    // runtimeOnly fg.deobf("curse.maven:expanded-ae-1213351:8048572")      // Expanded AE 1.4.1.b
 
     // Library deps the addon mods pull in (dev-runtime only), via each lib's official maven.
     runtimeOnly fg.deobf("dev.architectury:architectury-forge:9.2.14")
