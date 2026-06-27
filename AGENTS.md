@@ -20,7 +20,7 @@ Guidance for AI agents (and humans) working in this repository. Read this before
 
 ## Style rules (enforced)
 
-- **No em-dashes.** Do not use the em-dash character (Unicode U+2014, the long dash) anywhere in docs, comments, or strings. Use commas, colons, parentheses, or separate sentences instead. Check with `grep -rP '\x{2014}' --include='*.md' .` (it must return nothing).
+- **No em-dashes.** Do not use the em-dash character (Unicode U+2014, the long dash) anywhere in docs, comments, or strings. Use commas, colons, parentheses, or separate sentences instead. Check with `grep -rP '\x{2014}' --include='*.md' --include='*.java' --include='*.json' --include='*.yml' --include='*.yaml' --include='*.properties' .` (it must return nothing).
 - **Keep `README.md` and `CURSEFORGE.md` aligned.** They describe the same mod for different audiences; any user-facing change (features, recipe, config options, supported versions) must be reflected in BOTH, with no contradictions.
 - Match the existing code style (4-space indent). Keep Mixins minimal.
 
@@ -44,7 +44,7 @@ See `RELEASE.md` for the full walkthrough. In short:
 3. Bump `mod_version` in `gradle.properties`.
 4. Move `CHANGELOG.md`'s `[Unreleased]` items into a new `## [x.y.z] - YYYY-MM-DD` section.
 5. Commit, then create a GitHub Release with tag `vx.y.z` (use "Generate release notes" for the body).
-6. The **`.github/workflows/release.yml`** workflow then builds and publishes the jar to the GitHub Release and CurseForge automatically.
+6. The **`.github/workflows/release.yml`** workflow then builds and publishes the jar to the GitHub Release, CurseForge, and Modrinth automatically.
 
 ### Pre-release checklist
 - [ ] `./gradlew build` green, tests pass
