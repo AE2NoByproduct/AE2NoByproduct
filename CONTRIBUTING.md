@@ -33,7 +33,7 @@ This starts a Minecraft 1.20.1 Forge client with the mod loaded. You will need a
 
 ## Project Layout
 
-```
+```text
 src/main/java/dev/erikcodes/ae2nobyproduct/
   ├── AE2NoByProduct.java          # Mod entry point
   ├── client/                      # Client widgets + cached state (toggle button, ClientByproductState)

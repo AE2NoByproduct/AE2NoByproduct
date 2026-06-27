@@ -5,7 +5,7 @@
 ## Related Issue
 
 <!-- Link to the issue this PR addresses, e.g. "Closes #42" or "Related to #17". -->
-Closes #
+Closes #<issue-number>
 
 ## Type of Change
 
