@@ -24,7 +24,6 @@ public class ByproductToggleButton extends AbstractButton {
         refreshTooltip();
     }
     @Override protected void renderWidget(GuiGraphics g, int mouseX, int mouseY, float pt) {
-        refreshTooltip();
         g.fill(getX(), getY(), getX() + 16, getY() + 16, 0xFF000000);
         g.fill(getX() + 1, getY() + 1, getX() + 15, getY() + 15, 0xFF303030);
         int fg = ClientByproductState.effectiveState ? 0xFF40C040 : 0xFF707070;
