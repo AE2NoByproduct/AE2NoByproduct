@@ -34,8 +34,22 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+        // Applied Energistics 2 + GuideME are published here for addon developers.
+        maven {
+            name = "Modmaven"
+            url = "https://modmaven.dev/"
+            content {
+                includeGroup "appeng"
+                includeGroup "org.appliedenergistics"
+            }
+        }
+        // Fallback for any CurseForge-only artifacts.
+        maven {
+            name = "CurseMaven"
+            url = "https://cursemaven.com"
+            content { includeGroup "curse.maven" }
+        }
+        // Loom adds the essential maven repositories (Mojang, Fabric, Forge, Architectury) automatically.
     }
 
     tasks.withType(JavaCompile).configureEach {

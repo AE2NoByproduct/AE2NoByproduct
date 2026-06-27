@@ -20,6 +20,11 @@ dependencies {
     // Architectury API
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
+    // Applied Energistics 2 (Forge) — full mod, present at compile + dev runtime.
+    modImplementation "appeng:appliedenergistics2-forge:${rootProject.ae2_version}"
+    // GuideME is a hard runtime dependency of AE2 15.4.x; not needed to compile our code.
+    modRuntimeOnly "org.appliedenergistics:guideme:${rootProject.guideme_version}"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }

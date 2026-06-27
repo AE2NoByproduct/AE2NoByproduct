@@ -21,6 +21,12 @@ dependencies {
     // Architectury API
     modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
 
+    // Applied Energistics 2 (Fabric) — full mod, so the shared byproduct-stripping mixin
+    // (bundled from :common) has its appeng.* targets present at dev runtime.
+    modImplementation "appeng:appliedenergistics2-fabric:${rootProject.ae2_version}"
+    // GuideME is a hard runtime dependency of AE2 15.4.x.
+    modRuntimeOnly "org.appliedenergistics:guideme:${rootProject.guideme_version}"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
