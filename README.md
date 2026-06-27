@@ -57,7 +57,7 @@ Multi-loader and multi-version support is on the roadmap and will be built from 
 
 ## Installation
 
-1. Download the latest release jar from the [Releases](https://github.com/ErikCodes/AE2NoByProduct/releases) page.
+1. Download the latest release jar from the [Releases](https://github.com/MrErikCodes/AE2NoByProduct/releases) page.
 2. Drop the jar into your `mods/` folder alongside Applied Energistics 2.
 3. Launch Minecraft. No extra setup required.
 
@@ -115,7 +115,7 @@ No button will appear in the terminal; all processing patterns will silently str
 Java 17 is required. The Gradle wrapper provisions a JDK 17 toolchain automatically if one is not found locally.
 
 ```bash
-git clone https://github.com/ErikCodes/AE2NoByProduct.git
+git clone https://github.com/MrErikCodes/AE2NoByProduct.git
 cd AE2NoByProduct
 ./gradlew build
 ```
@@ -138,7 +138,7 @@ Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) before
 
 **Found a bug?** Open an issue using the [Bug Report](.github/ISSUE_TEMPLATE/bug_report.yml) template. Include your Minecraft version, mod loader version, AE2 version, AE2 No Byproduct version, logs, and clear reproduction steps.
 
-**Have a question?** Use [GitHub Discussions](https://github.com/ErikCodes/AE2NoByProduct/discussions) rather than an issue.
+**Have a question?** Use [GitHub Discussions](https://github.com/MrErikCodes/AE2NoByProduct/discussions) rather than an issue.
 
 ---
 

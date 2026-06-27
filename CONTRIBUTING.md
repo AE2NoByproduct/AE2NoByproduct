@@ -14,7 +14,7 @@ Thank you for your interest in contributing! This document covers everything you
 **Clone and build**
 
 ```bash
-git clone https://github.com/ErikCodes/AE2NoByProduct.git
+git clone https://github.com/MrErikCodes/AE2NoByProduct.git
 cd AE2NoByProduct
 ./gradlew build
 ```
@@ -36,7 +36,6 @@ This starts a Minecraft 1.20.1 Forge client with the mod loaded. You will need a
 ```
 src/main/java/dev/erikcodes/ae2nobyproduct/
   ├── AE2NoByProduct.java          # Mod entry point
-  ├── config/                      # Server config (TOML, Forge)
   ├── client/                      # Client widgets + cached state (toggle button, ClientByproductState)
   ├── config/                      # Server config (Forge TOML)
   ├── core/                        # EffectiveState, ByproductState (NBT), ByproductService
@@ -108,4 +107,4 @@ Use the [Bug Report](.github/ISSUE_TEMPLATE/bug_report.yml) issue template. Incl
 
 ## Questions?
 
-For general questions that don't belong in an issue, use [GitHub Discussions](https://github.com/ErikCodes/AE2NoByProduct/discussions).
+For general questions that don't belong in an issue, use [GitHub Discussions](https://github.com/MrErikCodes/AE2NoByProduct/discussions).

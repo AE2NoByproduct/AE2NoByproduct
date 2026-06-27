@@ -75,6 +75,6 @@ The button disappears and every player's processing patterns are stripped automa
 
 ## 📖 Open Source
 
-AE2 No Byproduct is **open source under the MIT License** — use it, fork it, bundle it in your modpack freely; just keep the credit. Source, issues, and contributions welcome on [GitHub](https://github.com/ErikCodes/AE2NoByProduct).
+AE2 No Byproduct is **open source under the MIT License** — use it, fork it, bundle it in your modpack freely; just keep the credit. Source, issues, and contributions welcome on [GitHub](https://github.com/MrErikCodes/AE2NoByProduct).
 
 *Not affiliated with or endorsed by the Applied Energistics team. AE2 and its assets belong to their respective owners.*
