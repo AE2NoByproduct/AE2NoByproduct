@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build --stacktrace
+
+      # Single source of truth for the Minecraft version: gradle.properties.
+      # This keeps the published game-version in lockstep with what was actually built.
+      - name: Read game version from gradle.properties
+        id: props
+        run: echo "mc=$(grep -E '^mc_version=' gradle.properties | cut -d= -f2)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to GitHub Releases, CurseForge, and Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          curseforge-id: 1590300
+          curseforge-token: ${{ secrets.CF_API_TOKEN }}
+
+          modrinth-id: ae2-no-byproduct
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          # The compiled mod jar (excludes any -sources / -dev jars).
+          files: build/libs/!(*-sources|*-dev).jar
+
+          name: ${{ github.event.release.name }}
+          version: ${{ github.event.release.tag_name }}
+          version-type: release
+          changelog: ${{ github.event.release.body }}
+
+          # What this jar actually supports. Update these when loaders / versions change.
+          loaders: forge
+          game-versions: ${{ steps.props.outputs.mc }}
+          java: "17"
