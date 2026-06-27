@@ -11,5 +11,7 @@ public class AE2NoByProduct {
 
     public AE2NoByProduct() {
         LOGGER.info("AE2 No Byproduct loading");
+        net.minecraftforge.fml.ModLoadingContext.get().registerConfig(
+            net.minecraftforge.fml.config.ModConfig.Type.SERVER, dev.nilsenkonsult.ae2nobyproduct.config.Config.SPEC);
     }
 }
