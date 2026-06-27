@@ -8,7 +8,7 @@ Thank you for your interest in contributing! This document covers everything you
 
 **Prerequisites**
 
-- **Java 17** (the Gradle build uses a toolchain resolver — if you don't have JDK 17 installed locally, Gradle will automatically download and provision one; you just need a working internet connection on the first build).
+- **Java 17** (the Gradle build uses a toolchain resolver: if you don't have JDK 17 installed locally, Gradle will automatically download and provision one; you just need a working internet connection on the first build).
 - **Git**
 
 **Clone and build**
@@ -27,7 +27,7 @@ The output jar will appear in `build/libs/`.
 ./gradlew runClient
 ```
 
-This starts a Minecraft 1.20.1 Forge client with the mod loaded. You will need a copy of Applied Energistics 2 in `run/mods/` for the dev environment to work correctly (download it from CurseForge/Modrinth and drop it there).
+This starts a Minecraft 1.20.1 Forge client with the mod loaded. Applied Energistics 2 (and its GuideME dependency) is resolved automatically by the build via CurseMaven, so it loads in the dev client with no manual steps.
 
 ---
 
@@ -40,7 +40,7 @@ src/main/java/dev/erikcodes/ae2nobyproduct/
   ├── config/                      # Server config (Forge TOML)
   ├── core/                        # EffectiveState, ByproductState (NBT), ByproductService
   ├── event/                       # Server events (sync state on terminal open)
-  ├── item/                        # Byproduct Remover item (right-click a Pattern Provider)
+  ├── item/                        # Byproduct Remover item (shift+right-click a Pattern Provider)
   ├── mixin/                       # Mixin classes
   │   ├── PatternEncodingTermMenuMixin.java       # Server-side: strips byproducts at encode time
   │   └── client/                  # Client-side: toolbar toggle button
@@ -64,7 +64,7 @@ src/main/java/dev/erikcodes/ae2nobyproduct/
 
 When multi-version support lands (see README roadmap), each new MC/AE2 target will need:
 
-1. Verify the **Mixin target** (`PatternEncodingTermMenu`) still exists under the same class name and that the injection point method signature hasn't changed. AE2 occasionally refactors internals between minor versions — check the AE2 source or decompiled jar before assuming compatibility.
+1. Verify the **Mixin target** (`PatternEncodingTermMenu`) still exists under the same class name and that the injection point method signature hasn't changed. AE2 occasionally refactors internals between minor versions, so check the AE2 source or decompiled jar before assuming compatibility.
 2. Update `build.gradle` / `gradle.properties` with the new MC, Forge, and AE2 version coordinates.
 3. Run `./gradlew runClient` and verify the button appears and stripping works end-to-end.
 4. Update the version table in `README.md`.
@@ -74,7 +74,7 @@ When multi-version support lands (see README roadmap), each new MC/AE2 target wi
 ## Coding Conventions
 
 - Match the style of the existing source files (4-space indentation, Allman-style braces in the existing Java files, etc.).
-- Keep Mixins minimal — inject only what is necessary; avoid `@Overwrite` unless there is no alternative.
+- Keep Mixins minimal: inject only what is necessary; avoid `@Overwrite` unless there is no alternative.
 - All packet handling must be validated on the server; never trust values sent from the client.
 - Add a brief Javadoc comment on every Mixin class explaining what it targets and why.
 
@@ -88,20 +88,20 @@ When multi-version support lands (see README roadmap), each new MC/AE2 target wi
    ./gradlew build
    ```
 3. Test in-game with `./gradlew runClient`.
-4. Open a pull request against `main` using the PR template. Fill in every section — especially "How tested."
+4. Open a pull request against `main` using the PR template. Fill in every section, especially "How tested."
 5. A maintainer will review your PR. Please be responsive to feedback; stale PRs may be closed after 30 days of inactivity.
 
 **Before opening a PR, please:**
 
 - Search open issues and PRs to avoid duplicates.
-- Keep changes focused — one logical change per PR.
+- Keep changes focused: one logical change per PR.
 - Update documentation (`README.md`, config descriptions) if your change affects user-visible behavior.
 
 ---
 
 ## Reporting Bugs
 
-Use the [Bug Report](.github/ISSUE_TEMPLATE/bug_report.yml) issue template. Include logs and exact reproduction steps — without them, bugs are very hard to diagnose.
+Use the [Bug Report](.github/ISSUE_TEMPLATE/bug_report.yml) issue template. Include logs and exact reproduction steps; without them, bugs are very hard to diagnose.
 
 ---
 
