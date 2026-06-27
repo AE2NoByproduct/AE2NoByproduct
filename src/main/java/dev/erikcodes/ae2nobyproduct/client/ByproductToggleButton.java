@@ -1,36 +1,51 @@
 package dev.erikcodes.ae2nobyproduct.client;
 
+import appeng.client.gui.Icon;
+import appeng.client.gui.widgets.IconButton;
 import dev.erikcodes.ae2nobyproduct.network.C2SSetByproductRemoval;
 import dev.erikcodes.ae2nobyproduct.network.Network;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 
-// Extends Button (not AbstractButton) so it can be handed to AE2's
-// AEBaseScreen#addToLeftToolbar, whose signature is <B extends Button>.
-// Position is (0,0) here; AE2's VerticalButtonBar assigns the real x/y each frame.
-public class ByproductToggleButton extends Button {
+// Extends AE2's IconButton (itself a net.minecraft...Button) so it can be handed to
+// AEBaseScreen#addToLeftToolbar (signature <B extends Button>) and renders with the
+// native AE2 toolbar frame + an icon, matching the adjacent left-toolbar buttons.
+// IconButton handles all drawing in renderWidget via the chosen getIcon(); we must NOT
+// override renderWidget. Position is (0,0); AE2's VerticalButtonBar assigns x/y each frame.
+public class ByproductToggleButton extends IconButton {
     private boolean lastKnownState;
 
     public ByproductToggleButton() {
-        super(0, 0, 16, 16, Component.empty(), b -> {}, DEFAULT_NARRATION);
+        // No-op OnPress: we override onPress() below. Keeps the required no-arg ctor.
+        super(b -> {});
         lastKnownState = ClientByproductState.effectiveState;
         refreshTooltip();
     }
+
+    // IconButton implements ITooltip and renders the tooltip from getTooltipMessage(),
+    // which returns getMessage(); so setting the message is AE2's native tooltip path.
     private void refreshTooltip() {
-        setTooltip(Tooltip.create(Component.translatable(
-            ClientByproductState.effectiveState ? "tooltip.ae2nobyproduct.on" : "tooltip.ae2nobyproduct.off")));
+        setMessage(Component.translatable(
+            ClientByproductState.effectiveState ? "tooltip.ae2nobyproduct.on" : "tooltip.ae2nobyproduct.off"));
     }
-    @Override public void onPress() {
+
+    // Bright green check when removal is ON, red cross when OFF — reads as active/inactive.
+    @Override
+    protected Icon getIcon() {
+        return ClientByproductState.effectiveState ? Icon.VALID : Icon.INVALID;
+    }
+
+    @Override
+    public void onPress() {
         boolean nv = !ClientByproductState.effectiveState;
         ClientByproductState.effectiveState = nv;
         lastKnownState = nv;
         Network.CHANNEL.sendToServer(new C2SSetByproductRemoval(nv));
         refreshTooltip();
     }
-    @Override public void render(GuiGraphics g, int mouseX, int mouseY, float pt) {
+
+    @Override
+    public void render(GuiGraphics g, int mouseX, int mouseY, float pt) {
         // Visibility is config-driven and may sync in after this screen was built.
         this.visible = ClientByproductState.showButton();
         if (lastKnownState != ClientByproductState.effectiveState) {
@@ -39,12 +54,4 @@ public class ByproductToggleButton extends Button {
         }
         super.render(g, mouseX, mouseY, pt);
     }
-    @Override protected void renderWidget(GuiGraphics g, int mouseX, int mouseY, float pt) {
-        g.fill(getX(), getY(), getX() + 16, getY() + 16, 0xFF000000);
-        g.fill(getX() + 1, getY() + 1, getX() + 15, getY() + 15, 0xFF303030);
-        int fg = ClientByproductState.effectiveState ? 0xFF40C040 : 0xFF707070;
-        g.fill(getX() + 4, getY() + 4, getX() + 12, getY() + 12, fg);
-        if (isHovered()) g.fill(getX(), getY(), getX() + 16, getY() + 16, 0x33FFFFFF);
-    }
-    @Override public void updateWidgetNarration(NarrationElementOutput o) { defaultButtonNarrationText(o); }
 }
