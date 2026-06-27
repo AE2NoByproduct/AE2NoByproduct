@@ -34,6 +34,10 @@ mixin {
 
 repositories {
     maven { url 'https://cursemaven.com' }
+    maven { url 'https://maven.architectury.dev/' }
+    maven { url 'https://maven.shedaniel.me/' }
+    maven { url 'https://maven.theillusivec4.top/' }
+    maven { url 'https://maven.saps.dev/releases' }
     mavenCentral()
 }
 
@@ -59,11 +63,27 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:mega-cells-622112:6175008")           // Mega Cells 2.4.6
     runtimeOnly fg.deobf("curse.maven:ex-pattern-provider-892005:7986603")  // Extended AE 1.4.15
     runtimeOnly fg.deobf("curse.maven:expanded-ae-1213351:8048572")         // Expanded AE 1.4.1.b
+
+    // Library deps the addon mods pull in (dev-runtime only), via each lib's official maven.
+    runtimeOnly fg.deobf("dev.architectury:architectury-forge:9.2.14")
+    runtimeOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.136")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1")
+    runtimeOnly fg.deobf("curse.maven:glodium-957920:5226922")              // Glodium 1.5 (Extended AE)
+    // KubeJS (+ Rhino) — so KubeJS recipe scripting can be verified against our recipe.
+    runtimeOnly fg.deobf("dev.latvian.mods:kubejs-forge:2001.6.5-build.26")
+    runtimeOnly fg.deobf("curse.maven:rhino-416294:6186971")                // Rhino 2001.2.3-build.10 (pack pairing)
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 test { useJUnitPlatform() }
+
+// KubeJS declares a transitive rhino-forge version that isn't published to its maven; drop that
+// module from resolution so the explicit CurseMaven Rhino above (the version the pack uses)
+// supplies the rhino mod at runtime instead.
+configurations.all {
+    exclude group: 'dev.latvian.mods', module: 'rhino-forge'
+}
 
 tasks.named('processResources', ProcessResources).configure {
     var props = [version: project.mod_version, mc_version: project.mc_version]
