@@ -3,16 +3,19 @@ package dev.erikcodes.ae2nobyproduct.client;
 import dev.erikcodes.ae2nobyproduct.network.C2SSetByproductRemoval;
 import dev.erikcodes.ae2nobyproduct.network.Network;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 
-public class ByproductToggleButton extends AbstractButton {
+// Extends Button (not AbstractButton) so it can be handed to AE2's
+// AEBaseScreen#addToLeftToolbar, whose signature is <B extends Button>.
+// Position is (0,0) here; AE2's VerticalButtonBar assigns the real x/y each frame.
+public class ByproductToggleButton extends Button {
     private boolean lastKnownState;
 
-    public ByproductToggleButton(int x, int y) {
-        super(x, y, 16, 16, Component.empty());
+    public ByproductToggleButton() {
+        super(0, 0, 16, 16, Component.empty(), b -> {}, DEFAULT_NARRATION);
         lastKnownState = ClientByproductState.effectiveState;
         refreshTooltip();
     }
@@ -43,5 +46,5 @@ public class ByproductToggleButton extends AbstractButton {
         g.fill(getX() + 4, getY() + 4, getX() + 12, getY() + 12, fg);
         if (isHovered()) g.fill(getX(), getY(), getX() + 16, getY() + 16, 0x33FFFFFF);
     }
-    @Override protected void updateWidgetNarration(NarrationElementOutput o) { defaultButtonNarrationText(o); }
+    @Override public void updateWidgetNarration(NarrationElementOutput o) { defaultButtonNarrationText(o); }
 }
