@@ -7,6 +7,8 @@ version="${version}"
 displayName="AE2 No Byproduct"
 authors="ErikCodes"
 description="Strips byproducts from AE2 processing patterns at encode time."
+[[mixins]]
+config="ae2nobyproduct.mixins.json"
 [[dependencies.ae2nobyproduct]]
     modId="forge"
     mandatory=true

@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.erikcodes.ae2nobyproduct.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ae2nobyproduct.refmap.json",
+  "mixins": ["PatternEncodingTermMenuMixin"],
+  "injectors": { "defaultRequire": 1 }
+}
