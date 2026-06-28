@@ -30,14 +30,24 @@ jobs:
           chmod +x ./gradlew
           ./gradlew build --stacktrace
 
-      # Upload the real per-loader mod jars from each module (the root project only
-      # produces an empty placeholder jar). Excludes the -sources and -dev* jars.
-      - name: Upload jars
+      # Upload each loader's real mod jar as its own artifact, so the Actions run page
+      # lists them separately (the root project only emits an empty placeholder jar).
+      # Excludes the -sources and -dev* jars.
+      - name: Upload Forge jar
         uses: actions/upload-artifact@v4
         with:
-          name: ae2nobyproduct-jars
+          name: ae2nobyproduct-forge
           path: |
             forge/build/libs/*.jar
+            !**/*-sources.jar
+            !**/*-dev*.jar
+          if-no-files-found: error
+
+      - name: Upload Fabric jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: ae2nobyproduct-fabric
+          path: |
             fabric/build/libs/*.jar
             !**/*-sources.jar
             !**/*-dev*.jar
