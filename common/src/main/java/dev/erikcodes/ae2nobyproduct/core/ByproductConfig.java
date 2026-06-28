@@ -27,6 +27,10 @@ public final class ByproductConfig {
         boolean enableFeature();
         boolean allowPlayerToggle();
         boolean defaultStrip();
+        /** Whether the Byproduct Remover item is consumed (shrinks by 1) on a successful clean. */
+        boolean consumeOnUse();
+        /** Whether the Byproduct Remover item sends chat feedback when used. */
+        boolean showMessages();
         /** Per-player saved toggle. Only consulted when {@link #allowPlayerToggle()} is true. */
         boolean savedState(Player player, boolean def);
         void setSavedState(Player player, boolean value);
@@ -37,6 +41,8 @@ public final class ByproductConfig {
         @Override public boolean enableFeature() { return true; }
         @Override public boolean allowPlayerToggle() { return false; }
         @Override public boolean defaultStrip() { return true; }
+        @Override public boolean consumeOnUse() { return false; }
+        @Override public boolean showMessages() { return true; }
         @Override public boolean savedState(Player player, boolean def) { return def; }
         @Override public void setSavedState(Player player, boolean value) { /* no persistence */ }
     };

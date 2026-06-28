@@ -4,7 +4,6 @@ import dev.architectury.platform.forge.EventBuses;
 import dev.erikcodes.ae2nobyproduct.CommonMod;
 import dev.erikcodes.ae2nobyproduct.config.Config;
 import dev.erikcodes.ae2nobyproduct.core.ByproductConfig;
-import dev.erikcodes.ae2nobyproduct.registry.ModItems;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -22,8 +21,10 @@ public class AE2NoByProductForge {
         ByproductConfig.install(new ForgeByproductConfig());
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SPEC);
-        ModItems.register(modEventBus);
 
+        // Items + networking are registered loader-agnostically inside CommonMod.init() via
+        // Architectury. EventBuses.registerModEventBus above gives Architectury the Forge bus it
+        // needs for the deferred item registration that init() kicks off.
         CommonMod.init();
     }
 }

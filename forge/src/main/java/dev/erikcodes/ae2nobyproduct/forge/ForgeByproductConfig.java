@@ -14,6 +14,8 @@ public final class ForgeByproductConfig implements ByproductConfig.Provider {
     @Override public boolean enableFeature() { return Config.enableFeature(); }
     @Override public boolean allowPlayerToggle() { return Config.allowPlayerToggle(); }
     @Override public boolean defaultStrip() { return Config.defaultStrip(); }
+    @Override public boolean consumeOnUse() { return Config.consumeOnUse(); }
+    @Override public boolean showMessages() { return Config.showMessages(); }
     @Override public boolean savedState(Player player, boolean def) { return ByproductState.get(player, def); }
     @Override public void setSavedState(Player player, boolean value) { ByproductState.set(player, value); }
 }

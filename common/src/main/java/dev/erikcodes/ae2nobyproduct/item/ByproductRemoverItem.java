@@ -6,7 +6,7 @@ import appeng.api.inventories.InternalInventory;
 import appeng.api.stacks.GenericStack;
 import appeng.blockentity.crafting.PatternProviderBlockEntity;
 import appeng.crafting.pattern.AEProcessingPattern;
-import dev.erikcodes.ae2nobyproduct.config.Config;
+import dev.erikcodes.ae2nobyproduct.core.ByproductConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +21,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  * Pattern Provider. Right-click a Pattern Provider block: each PROCESSING pattern
  * with more than one output is re-encoded keeping only its first (primary) output.
  * Crafting / smithing / stonecutting patterns are left untouched. Server-side only.
+ *
+ * <p>Lives in {@code common}: the AE2 ({@code appeng.*}) symbols it uses keep stable names across
+ * loaders, and Minecraft references are remapped per platform by the Architectury build. Config is
+ * read through the {@link ByproductConfig} seam so it works the same on Forge and Fabric.
  */
 public class ByproductRemoverItem extends Item {
 
@@ -42,7 +46,8 @@ public class ByproductRemoverItem extends Item {
             return InteractionResult.PASS;
         }
 
-        if (!Config.enableFeature()) {
+        ByproductConfig.Provider cfg = ByproductConfig.get();
+        if (!cfg.enableFeature()) {
             notify(player, "message.ae2nobyproduct.disabled");
             return InteractionResult.CONSUME;
         }
@@ -59,7 +64,7 @@ public class ByproductRemoverItem extends Item {
             provider.getLogic().saveChanges();
             provider.setChanged();
             notify(player, "message.ae2nobyproduct.removed", cleaned);
-            if (Config.consumeOnUse()) {
+            if (cfg.consumeOnUse()) {
                 context.getItemInHand().shrink(1);
             }
         } else {
@@ -71,7 +76,7 @@ public class ByproductRemoverItem extends Item {
 
     /** Sends a chat message to the player, unless messages are disabled in the config. */
     private static void notify(Player player, String key, Object... args) {
-        if (Config.showMessages()) {
+        if (ByproductConfig.get().showMessages()) {
             player.displayClientMessage(Component.translatable(key, args), false);
         }
     }
