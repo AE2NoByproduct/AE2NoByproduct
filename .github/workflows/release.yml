@@ -80,19 +80,37 @@ jobs:
           game-versions: ${{ steps.props.outputs.mc }}
           java: "17"
 
-      - name: Publish to Modrinth
+      # Modrinth: a single multi-file call only tagged one loader and dropped the Fabric jar, the
+      # same multi-loader limitation as CurseForge. Publish each loader's jar as its own version so
+      # both are available. The version numbers carry a loader suffix (0.2.0+forge / 0.2.0+fabric)
+      # so the two versions never collide on the same number.
+      - name: Publish Forge to Modrinth
         if: ${{ !cancelled() && !contains(github.event.release.body, '[skip-stores]') }}
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ae2-no-byproduct
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          files: |
-            forge/build/libs/!(*-sources|*-dev*).jar
-            fabric/build/libs/!(*-sources|*-dev*).jar
-          name: ${{ github.event.release.name }}
-          version: ${{ github.event.release.tag_name }}
+          files: forge/build/libs/!(*-sources|*-dev*).jar
+          name: ${{ github.event.release.name }} (Forge)
+          version: ${{ github.event.release.tag_name }}+forge
           version-type: release
           changelog: ${{ github.event.release.body }}
+          loaders: forge
+          game-versions: ${{ steps.props.outputs.mc }}
+          java: "17"
+
+      - name: Publish Fabric to Modrinth
+        if: ${{ !cancelled() && !contains(github.event.release.body, '[skip-stores]') }}
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ae2-no-byproduct
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: fabric/build/libs/!(*-sources|*-dev*).jar
+          name: ${{ github.event.release.name }} (Fabric)
+          version: ${{ github.event.release.tag_name }}+fabric
+          version-type: release
+          changelog: ${{ github.event.release.body }}
+          loaders: fabric
           game-versions: ${{ steps.props.outputs.mc }}
           java: "17"
 
