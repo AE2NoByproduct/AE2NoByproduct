@@ -20,7 +20,12 @@ public class AE2NoByProductForge {
         // Supply the loader-specific settings + per-player toggle persistence to the shared core.
         ByproductConfig.install(new ForgeByproductConfig());
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SPEC);
+        // Global config in the standard config/ folder (config/ae2nobyproduct.toml), like most
+        // mods, instead of Forge's per-world serverconfig/. COMMON = one file per install; the
+        // server reads it and stays authoritative, syncing the bits clients need via ModNetworking
+        // (Forge does not auto-sync COMMON configs, but we do our own sync). Mirrors Fabric's
+        // config/ae2nobyproduct.json.
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC, CommonMod.MOD_ID + ".toml");
 
         // Items + networking are registered loader-agnostically inside CommonMod.init() via
         // Architectury. EventBuses.registerModEventBus above gives Architectury the Forge bus it
