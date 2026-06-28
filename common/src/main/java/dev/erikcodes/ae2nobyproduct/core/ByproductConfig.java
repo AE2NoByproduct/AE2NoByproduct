@@ -12,13 +12,13 @@ import net.minecraft.world.entity.player.Player;
  *   <li><b>Forge</b> installs a provider backed by its {@code ForgeConfigSpec} config and its
  *       per-player persisted-NBT toggle store.</li>
  *   <li><b>Fabric</b> (this milestone) uses {@link #DEFAULT}: feature on, no per-player toggle,
- *       strip by default — so the shared mixin actually strips byproducts on Fabric without a
+ *       strip by default, so the shared mixin actually strips byproducts on Fabric without a
  *       config/UI/networking port.</li>
  * </ul>
  *
  * <p>Per-player toggle access ({@link Provider#savedState}/{@link Provider#setSavedState}) is part
  * of this interface because the Forge implementation relies on {@code Player.getPersistentData()},
- * which does not exist in vanilla/Fabric — keeping it behind the provider lets the persistence
+ * which does not exist in vanilla/Fabric, so keeping it behind the provider lets the persistence
  * implementation stay on the Forge side.
  */
 public final class ByproductConfig {

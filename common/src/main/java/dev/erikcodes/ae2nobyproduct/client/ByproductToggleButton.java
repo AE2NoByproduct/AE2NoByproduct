@@ -28,7 +28,7 @@ public class ByproductToggleButton extends IconButton {
             ClientByproductState.effectiveState ? "tooltip.ae2nobyproduct.on" : "tooltip.ae2nobyproduct.off"));
     }
 
-    // Bright green check when removal is ON, red cross when OFF — reads as active/inactive.
+    // Bright green check when removal is ON, red cross when OFF; reads as active/inactive.
     @Override
     protected Icon getIcon() {
         return ClientByproductState.effectiveState ? Icon.VALID : Icon.INVALID;

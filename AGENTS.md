@@ -4,18 +4,18 @@ Guidance for AI agents (and humans) working in this repository. Read this before
 
 ## What this project is
 
-**AE2 No Byproduct** is an Applied Energistics 2 add-on for Minecraft. It strips byproducts (secondary outputs) from AE2 processing patterns via a per-player toggle in the Pattern Encoding Terminal, a server/pack config, and a craftable Byproduct Remover item. Currently ships for **MC 1.20.1 / Forge / AE2 15.4.x**. Multi-loader and multi-version (Fabric, NeoForge, 1.21.1) is in progress via Architectury + Stonecutter.
+**AE2 No Byproduct** is an Applied Energistics 2 add-on for Minecraft. It strips byproducts (secondary outputs) from AE2 processing patterns via a per-player toggle in the Pattern Encoding Terminal, a server/pack config, and a craftable Byproduct Remover item. Ships for **MC 1.20.1 on Forge and Fabric / AE2 15.4.x**, from one shared codebase via Architectury. Multi-version (**1.21.1 on NeoForge**) is in progress via Stonecutter. Note: 1.21.1 is NeoForge only, because AE2 has no Fabric build for 1.21.1.
 
 ## Build & dev commands
 
-- `./gradlew build` builds the mod; the jar lands in `build/libs/`.
-- `./gradlew runClient` launches a dev client (Forge 1.20.1). AE2 + GuideME are pulled automatically via CurseMaven, no manual mod drop needed.
+- `./gradlew build` builds every module; the per-loader jars land in `forge/build/libs/` and `fabric/build/libs/`, named `ae2nobyproduct-<loader>-<mcversion>-<modversion>.jar`.
+- `./gradlew :forge:runClient` / `./gradlew :fabric:runClient` launch a dev client for each loader. AE2 + GuideME are resolved automatically; the Fabric dev runtime also pulls Team Reborn Energy (a nested dependency AE2-fabric needs that loom does not surface on its own).
 - Java 17 is required; the Gradle wrapper auto-provisions a JDK 17 toolchain.
 
 ## Repository layout
 
-- Source: `src/main/java/dev/erikcodes/ae2nobyproduct/` (see `CONTRIBUTING.md` for the package breakdown), resources in `src/main/resources/`.
-- One server-side Mixin strips byproducts; client Mixins add the toolbar toggle; the Byproduct Remover item uses AE2's public pattern API.
+- Multi-loader Architectury layout: `common/` holds all shared logic (stripping mixin, networking, item, toolbar button, config/persistence seams); `forge/` and `fabric/` hold only the loader-specific leaves (entry point, config source, per-player persistence). See `CONTRIBUTING.md` for the package breakdown. **Never share a Java package between `common/` and a loader module** (Forge/NeoForge enforce JPMS and reject split packages).
+- One server-side Mixin strips byproducts; client Mixins add the toolbar toggle; the Byproduct Remover item uses AE2's pattern API. All live in `common/` and run on both loaders.
 - `.github/workflows/` holds CI and release automation.
 
 ## Style rules (enforced)
@@ -44,7 +44,7 @@ See `RELEASE.md` for the full walkthrough. In short:
 3. Bump `mod_version` in `gradle.properties`.
 4. Move `CHANGELOG.md`'s `[Unreleased]` items into a new `## [x.y.z] - YYYY-MM-DD` section.
 5. Commit, then create a GitHub Release with tag `vx.y.z` (use "Generate release notes" for the body).
-6. The **`.github/workflows/release.yml`** workflow then builds and publishes the jar to the GitHub Release, CurseForge, and Modrinth automatically.
+6. The **`.github/workflows/release.yml`** workflow then builds and publishes BOTH loader jars (forge + fabric) to the GitHub Release, CurseForge, and Modrinth automatically.
 
 ### Pre-release checklist
 - [ ] `./gradlew build` green, tests pass

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 // Adds our toggle button to AE2's native left toolbar, once, in the screen
 // constructor. AEBaseScreen creates its `verticalToolbar` (a VerticalButtonBar)
 // in its constructor and keeps a persistent button list that init()/resize only
-// re-registers and re-positions — so a single constructor-time add appears once,
+// re-registers and re-positions, so a single constructor-time add appears once,
 // never duplicates, and survives resizes natively.
 //
 // addToLeftToolbar is invoked through AEBaseScreenInvoker (an @Invoker on the
