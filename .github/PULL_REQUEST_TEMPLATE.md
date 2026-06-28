@@ -5,7 +5,7 @@
 ## Related Issue
 
 <!-- Link to the issue this PR addresses, e.g. "Closes #42" or "Related to #17". -->
-Closes #
+Closes #<issue-number>
 
 ## Type of Change
 
@@ -23,7 +23,7 @@ Closes #
 - [ ] Tested in-game via `./gradlew runClient`
 
 **In-game test steps:**
-<!-- e.g. "Opened Pattern Encoding Terminal, toggled strip ON, encoded a pattern with two outputs — confirmed only the first output was kept." -->
+<!-- e.g. "Opened Pattern Encoding Terminal, toggled strip ON, encoded a pattern with two outputs, and confirmed only the first output was kept." -->
 
 ## Checklist
 
@@ -31,4 +31,6 @@ Closes #
 - [ ] Code follows the existing style (indentation, brace style, naming)
 - [ ] Mixin targets verified against the AE2 version listed in `gradle.properties`
 - [ ] Documentation updated if this changes user-visible behavior (README, config descriptions)
+- [ ] `README.md` and `CURSEFORGE.md` kept aligned; no em-dashes added
+- [ ] `CHANGELOG.md` updated under `[Unreleased]` if this changes user-visible behavior
 - [ ] No new files added that are not needed (no IDE project files, no build artifacts)

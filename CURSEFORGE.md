@@ -2,9 +2,9 @@
 
 **Tired of Applied Energistics 2 autocrafting choking on byproducts? This fixes it.**
 
-Many AE2 **processing patterns** — ore doubling, chemical reactions, smelting chains — produce a primary output *plus* one or more secondary outputs ("byproducts"). In a lot of modpacks those extra outputs jam ME autocrafting: the network can't route every output to a valid place, and the craft stalls.
+Many AE2 **processing patterns** (ore doubling, chemical reactions, smelting chains) produce a primary output *plus* one or more secondary outputs ("byproducts"). In a lot of modpacks those extra outputs jam ME autocrafting: the network can't route every output to a valid place, and the craft stalls.
 
-**AE2 No Byproduct** solves it at the source — and gives you a tool to clean up the patterns you've *already* made.
+**AE2 No Byproduct** solves it at the source, and gives you a tool to clean up the patterns you've *already* made.
 
 ---
 
@@ -13,20 +13,20 @@ Many AE2 **processing patterns** — ore doubling, chemical reactions, smelting 
 ### 🔘 A toggle in the Pattern Encoding Terminal
 A small button sits in AE2's native left-hand toolbar (right next to AE2's own buttons):
 
-- **Green check = ON** → when you encode a processing pattern, only the **first output** is kept; all byproducts are dropped before the pattern is saved.
-- **Red cross = OFF** → patterns encode normally, with every output.
+- **Green check = ON**: when you encode a processing pattern, only the **first output** is kept; all byproducts are dropped before the pattern is saved.
+- **Red cross = OFF**: patterns encode normally, with every output.
 
-It's **per-player**, **server-authoritative** (no client bypass), and your choice is **remembered** across relog, restart, and death. Crafting / smithing / stonecutting patterns are never touched — they only have one output anyway.
+It's **per-player**, **server-authoritative** (no client bypass), and your choice is **remembered** across relog, restart, and death. Crafting, smithing, and stonecutting patterns are never touched; they only have one output anyway.
 
 ### 🧹 The Byproduct Remover tool
-Already encoded a bunch of patterns with byproducts? Don't re-do them. Craft the **Byproduct Remover** and **shift + right-click any Pattern Provider** — every processing pattern stored inside it is instantly re-encoded to keep only its first output. You get a chat message telling you how many were cleaned.
+Already encoded a bunch of patterns with byproducts? Don't re-do them. Craft the **Byproduct Remover** and **shift + right-click any Pattern Provider**, and every processing pattern stored inside it is instantly re-encoded to keep only its first output. You get a chat message telling you how many were cleaned.
 
 > Works on AE2's Pattern Providers **and** add-on providers (tested with Extended AE and MEGA Cells).
 
 **Recipe (shapeless):** `16k Storage Component` + `Blank Pattern` + `Crafting Unit`
 
 ### ⚙️ Full operator / pack-maker control
-A server config lets pack authors decide exactly how it behaves — including **forcing** byproduct removal for everyone with no per-player UI at all.
+A server config lets pack authors decide exactly how it behaves, including **forcing** byproduct removal for everyone with no per-player UI at all.
 
 ---
 
@@ -53,13 +53,15 @@ The button disappears and every player's processing patterns are stripped automa
 
 ## 🧩 Compatibility
 
-- **AE2 add-ons:** any terminal that reuses AE2's Pattern Encoding Terminal (e.g. wireless pattern terminals) gets the toggle automatically. The Byproduct Remover works on add-on Pattern Providers too.
+- **AE2 add-ons:** any terminal that reuses AE2's Pattern Encoding Terminal (such as wireless pattern terminals) gets the toggle automatically. The Byproduct Remover works on add-on Pattern Providers too.
 - **KubeJS:** the Byproduct Remover's recipe is a standard shapeless recipe, so packs can freely change or remove it with KubeJS.
-- Plays nicely alongside other AE2 add-ons — it only touches the encoding step.
+- Plays nicely alongside other AE2 add-ons; it only touches the encoding step.
 
 ---
 
 ## 📦 Requirements
+
+> **Server and client mod.** Install AE2 No Byproduct on **both** the server and the client. On a dedicated or LAN server it must be present on the server *and* on every client that connects: the toggle button and Byproduct Remover live on the client, while stripping is enforced on the server. In single player, one copy in your `mods/` folder covers both.
 
 | | |
 |---|---|
@@ -75,6 +77,6 @@ The button disappears and every player's processing patterns are stripped automa
 
 ## 📖 Open Source
 
-AE2 No Byproduct is **open source under the MIT License** — use it, fork it, bundle it in your modpack freely; just keep the credit. Source, issues, and contributions welcome on [GitHub](https://github.com/MrErikCodes/AE2NoByProduct).
+AE2 No Byproduct is **open source under the MIT License**: use it, fork it, bundle it in your modpack freely; just keep the credit. Source, issues, and contributions welcome on [GitHub](https://github.com/MrErikCodes/AE2NoByProduct).
 
 *Not affiliated with or endorsed by the Applied Energistics team. AE2 and its assets belong to their respective owners.*
