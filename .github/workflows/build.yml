@@ -1,8 +1,20 @@
 name: Build
 
 on:
+  # Build every pull request so code is verified BEFORE it merges.
+  pull_request:
+  # Build direct pushes to main only when they touch code. Doc, workflow, and
+  # config-only commits skip the build (no point rebuilding the mod for a README
+  # or CI tweak), which is most of the churn on main.
   push:
     branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - '.github/**'
+      - 'LICENSE'
+      - 'logo.*'
+      - 'docs/**'
+      - '.gitignore'
   workflow_dispatch:
 
 permissions:
