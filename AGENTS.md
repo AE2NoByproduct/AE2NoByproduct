@@ -44,7 +44,7 @@ See `RELEASE.md` for the full walkthrough. In short:
 3. Bump `mod_version` in `gradle.properties`.
 4. Move `CHANGELOG.md`'s `[Unreleased]` items into a new `## [x.y.z] - YYYY-MM-DD` section.
 5. Commit, then create a GitHub Release with tag `vx.y.z` (use "Generate release notes" for the body).
-6. The **`.github/workflows/release.yml`** workflow then builds and publishes BOTH loader jars (forge + fabric) to the GitHub Release, CurseForge, and Modrinth automatically.
+6. The **`.github/workflows/release.yml`** workflow then builds both loader jars and publishes them automatically: both jars attached to the GitHub Release, and **each loader as its own correctly-tagged file/version** on CurseForge and Modrinth (see "How publishing works" in `RELEASE.md` for why it is one publish step per loader, per store).
 
 ### Pre-release checklist
 - [ ] `./gradlew build` green, tests pass
@@ -52,11 +52,11 @@ See `RELEASE.md` for the full walkthrough. In short:
 - [ ] `CHANGELOG.md` updated
 - [ ] `README.md` + `CURSEFORGE.md` aligned, no em-dashes
 - [ ] Supported-versions tables current (`README.md`, `CURSEFORGE.md`)
-- [ ] `release.yml` `game-versions` / `loaders` match what this jar actually supports
+- [ ] `release.yml` has a per-loader CurseForge AND Modrinth publish step for every loader being shipped
 
 ## When the build or targets change
 
-- If you add a loader or MC version (Architectury/Stonecutter work), **update `.github/workflows/release.yml`**: the build command, the published `files` glob (multiple jars), and `loaders`. The `game-versions` value is read from `gradle.properties` automatically, so update `minecraft_version` there. Also update the supported-versions tables in `README.md` and `CURSEFORGE.md`.
+- If you add a loader or MC version (Architectury/Stonecutter work), **update `.github/workflows/release.yml`**: add a **per-loader publish step for CurseForge AND for Modrinth** (each store needs one step per loader with an explicit single `loaders:` value, or mc-publish mis-tags the jars; see `RELEASE.md`), and add the new module's jar to the GitHub step's `files` glob. The `game-versions` value is read from `gradle.properties` automatically, so update `minecraft_version` there. Also update the supported-versions tables in `README.md` and `CURSEFORGE.md`.
 - Each new MC/AE2 target needs the Mixin targets re-verified against that AE2 version (see `CONTRIBUTING.md`).
 
 ## Secrets the release needs (already configured)
