@@ -2,7 +2,6 @@ package dev.erikcodes.ae2nobyproduct.forge;
 
 import dev.erikcodes.ae2nobyproduct.config.Config;
 import dev.erikcodes.ae2nobyproduct.core.ByproductConfig;
-import dev.erikcodes.ae2nobyproduct.core.ByproductState;
 import net.minecraft.world.entity.player.Player;
 
 /**

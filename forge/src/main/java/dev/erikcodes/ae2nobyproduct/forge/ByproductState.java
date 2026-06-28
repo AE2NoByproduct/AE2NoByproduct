@@ -1,8 +1,15 @@
-package dev.erikcodes.ae2nobyproduct.core;
+package dev.erikcodes.ae2nobyproduct.forge;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 
+/**
+ * Forge per-player toggle persistence, backed by Forge's {@code Player.getPersistentData()} +
+ * PERSISTED_NBT_TAG (which Forge copies across death/respawn for free). This is a Forge-only leaf,
+ * so it lives in the {@code forge} package, NOT in the shared {@code core} package: Forge's
+ * ModLauncher enforces JPMS modules and rejects a package that exists in both the platform module
+ * and the bundled common module (split package). The Fabric equivalent is the persistence mixins.
+ */
 public final class ByproductState {
     private static final String SUBTAG = Player.PERSISTED_NBT_TAG; // "PlayerPersisted"
     private static final String KEY = "ae2nobyproduct:strip";
