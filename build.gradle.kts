@@ -13,6 +13,12 @@ repositories {
             includeGroup("org.appliedenergistics")
         }
     }
+    // Modrinth's maven serves current mod jars by slug, used for the 1.21.1 GuideME dev runtime
+    // (modmaven lags behind the GuideME version AE2 19.2.x requires).
+    maven("https://api.modrinth.com/maven") {
+        name = "Modrinth"
+        content { includeGroup("maven.modrinth") }
+    }
 }
 
 dependencies {
@@ -24,10 +30,11 @@ dependencies {
     // resolves. The artifact name is per-version: 1.20.1 uses appliedenergistics2-<loader>; AE2 19.x
     // (1.21.1) dropped the loader suffix (NeoForge only). Defaults to the 1.20.1 form.
     "modImplementation"("appeng:${mod.prop("ae2_artifact", "appliedenergistics2-${mod.loader}")}:${mod.prop("ae2_version")}")
-    // GuideME is a hard runtime dependency of AE2; not needed to compile our code, so it is optional
-    // (omit the property when the dev runtime resolves GuideME another way, e.g. bundled inside AE2).
-    mod.prop("guideme_version", "").takeIf { it.isNotEmpty() }?.let {
-        "modRuntimeOnly"("org.appliedenergistics:guideme:$it")
+    // GuideME is a hard runtime dependency of AE2, needed only for the dev client (not to compile).
+    // The full coordinate is per-version: 1.20.1 uses org.appliedenergistics:guideme from modmaven;
+    // 1.21.1 uses maven.modrinth:guideme (modmaven lags the version AE2 19.2.x requires). Optional.
+    mod.prop("guideme", "").takeIf { it.isNotEmpty() }?.let {
+        "modRuntimeOnly"(it)
     }
 
     if (mod.isFabric) {
