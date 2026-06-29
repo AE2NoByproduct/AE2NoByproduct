@@ -21,6 +21,16 @@ Publishing is automated. When you publish a GitHub Release, the [`release.yml`](
 
 There are no longer any per-loader, per-store publish steps. Stonecraft derives each file's loader, Minecraft version, and dependency tags from its Stonecutter node and `versions/dependencies/<mc>.properties`, so the Forge jar is tagged Forge, the NeoForge jar is tagged NeoForge, and so on, with no `+forge` / `+fabric` Modrinth version suffixes and no risk of mis-grouping.
 
+### Two flags control the store upload (both already correct for a normal release)
+
+- **`DO_PUBLISH`** (set in `release.yml`) is Stonecraft's **dry-run** switch, *not* a publish switch, so its value is inverted from what the name suggests. Stonecraft does `dryRun = DO_PUBLISH.toBoolean()`:
+  - `"false"` -> `dryRun=false` -> it **really uploads** (this is what we want, and what the workflow hard-codes).
+  - `"true"` or unset -> `dryRun=true` -> dry run: builds the upload but sends nothing.
+  - Leave it `"false"`. To skip the stores, use `[skip-stores]` (below), do not flip this to `"true"`.
+- **`[skip-stores]`** in the GitHub release notes skips the Modrinth/CurseForge step entirely (GitHub-only), see [below](#github-only-release-skip-curseforge--modrinth).
+
+So a normal release (notes *without* `[skip-stores]`) publishes to both stores automatically; you never touch `DO_PUBLISH`.
+
 **Adding a loader or version:** add a Stonecutter node plus a `versions/dependencies/<mc>.properties` file (see [AGENTS.md](AGENTS.md)). `chiseledBuildAndCollect` and `chiseledPublishMods` then pick it up automatically; no workflow edits are needed.
 
 ## GitHub-only release (skip CurseForge / Modrinth)

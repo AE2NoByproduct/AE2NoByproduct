@@ -57,12 +57,18 @@ jobs:
 
       # Stonecraft's built-in publishing (mod-publish-plugin) uploads each loader/version as its own
       # correctly-tagged file to Modrinth and CurseForge in one task, reading the notes from
-      # CHANGELOG.md. DO_PUBLISH=false flips off dry-run so it actually uploads. Put [skip-stores] in the
-      # release notes to attach to GitHub only.
+      # CHANGELOG.md. Put [skip-stores] in the release notes to attach to GitHub only.
       - name: Publish to Modrinth and CurseForge
         if: ${{ !contains(github.event.release.body, '[skip-stores]') }}
         run: ./gradlew chiseledPublishMods --stacktrace
         env:
+          # READ THIS BEFORE CHANGING: DO_PUBLISH is Stonecraft's DRY-RUN flag, not a publish flag.
+          # Stonecraft does `dryRun = DO_PUBLISH.toBoolean()` (see its Publishing.kt), so the value is
+          # inverted from what the name suggests:
+          #   "false"      -> dryRun=false -> REALLY uploads to Modrinth + CurseForge   <-- what we want
+          #   "true"/unset -> dryRun=true  -> dry run, builds the upload but sends nothing
+          # Keep this "false" to actually publish. To skip the stores, use [skip-stores] in the release
+          # notes (the `if:` above), do NOT flip this to "true".
           DO_PUBLISH: "false"
           RELEASE_TYPE: release
           MODRINTH_ID: ae2-no-byproduct
