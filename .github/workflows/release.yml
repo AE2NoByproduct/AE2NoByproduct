@@ -18,14 +18,17 @@ jobs:
       # Fail fast if the release tag and gradle.properties mod.version disagree: the published files
       # and the release label must be the same version.
       - name: Verify the release tag matches gradle.properties
+        env:
+          # Pass the tag via env, never interpolate ${{ }} straight into the shell (script injection).
+          TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
-          TAG="${{ github.event.release.tag_name }}"
-          TAG_VERSION="${TAG#v}"
           MOD_VERSION="$(grep -E '^mod\.version=' gradle.properties | cut -d= -f2 | tr -d '[:space:]')"
-          echo "Release tag:                  $TAG (version $TAG_VERSION)"
-          echo "gradle.properties mod.version: $MOD_VERSION"
-          if [ "$TAG_VERSION" != "$MOD_VERSION" ]; then
-            echo "::error::Release tag '$TAG' (version '$TAG_VERSION') does not match gradle.properties mod.version '$MOD_VERSION'. Bump mod.version (or fix the tag) and re-release."
+          EXPECTED_TAG="v$MOD_VERSION"
+          echo "Release tag:                   $TAG_NAME"
+          echo "gradle.properties mod.version: $MOD_VERSION (expects tag $EXPECTED_TAG)"
+          # The release contract is a strict v<mod.version> tag (not a bare version).
+          if [ "$TAG_NAME" != "$EXPECTED_TAG" ]; then
+            echo "::error::Release tag '$TAG_NAME' must be '$EXPECTED_TAG' (format v<mod.version>). Bump mod.version (or fix the tag) and re-release."
             exit 1
           fi
 
@@ -47,9 +50,10 @@ jobs:
           ./gradlew chiseledBuildAndCollect --stacktrace
 
       - name: Attach jars to the GitHub Release
-        run: gh release upload "${{ github.event.release.tag_name }}" build/libs/*.jar --clobber
+        run: gh release upload "$TAG_NAME" build/libs/*.jar --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.event.release.tag_name }}
 
       # Stonecraft's built-in publishing (mod-publish-plugin) uploads each loader/version as its own
       # correctly-tagged file to Modrinth and CurseForge in one task, reading the notes from

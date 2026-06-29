@@ -5,6 +5,8 @@ import appeng.client.gui.widgets.IconButton;
 import dev.erikcodes.ae2nobyproduct.network.ModNetworking;
 import net.minecraft.network.chat.Component;
 
+import java.lang.ref.WeakReference;
+
 // Extends AE2's IconButton (itself a net.minecraft...Button) so it can be handed to
 // AEBaseScreen#addToLeftToolbar (signature <B extends Button>) and renders with the native AE2
 // toolbar frame + an icon, matching the adjacent left-toolbar buttons.
@@ -20,7 +22,15 @@ public class ByproductToggleButton extends IconButton {
     public ByproductToggleButton() {
         // No-op OnPress: we override onPress() below. Keeps the required no-arg ctor.
         super(b -> {});
-        ClientByproductState.onChange = this::refresh;
+        // Register the sync callback through a WeakReference: ClientByproductState.onChange is static, so
+        // a bare this::refresh would pin this button (and its now-closed screen graph) in memory forever.
+        WeakReference<ByproductToggleButton> self = new WeakReference<>(this);
+        ClientByproductState.onChange = () -> {
+            ByproductToggleButton button = self.get();
+            if (button != null) {
+                button.refresh();
+            }
+        };
         refresh();
     }
 

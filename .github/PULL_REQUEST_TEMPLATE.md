@@ -20,7 +20,9 @@ Closes #<issue-number>
 <!-- Describe how you verified this change works correctly. -->
 
 - [ ] Built successfully with `./gradlew chiseledBuild`
-- [ ] Tested in-game via `./gradlew runActive`
+- [ ] Tested in-game via `./gradlew runActive` (run `Set active project to <node>` first; `runActive` only exercises the active node)
+
+**Active node(s) tested:** <!-- e.g. 1.20.1-forge, 1.20.1-fabric, 1.21.1-neoforge -->
 
 **In-game test steps:**
 <!-- e.g. "Opened Pattern Encoding Terminal, toggled strip ON, encoded a pattern with two outputs, and confirmed only the first output was kept." -->

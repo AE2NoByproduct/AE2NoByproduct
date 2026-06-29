@@ -3,7 +3,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://maven.kikugie.dev/releases")
-        maven("https://maven.kikugie.dev/snapshots")
         maven("https://maven.fabricmc.net/")
         maven("https://maven.architectury.dev")
         maven("https://maven.minecraftforge.net")
@@ -12,8 +11,8 @@ pluginManagement {
 }
 
 plugins {
-    id("gg.meza.stonecraft") version "1.10.+"
-    id("dev.kikugie.stonecutter") version "0.9.+"
+    id("gg.meza.stonecraft") version "1.10.14"
+    id("dev.kikugie.stonecutter") version "0.9.6"
 }
 
 stonecutter {

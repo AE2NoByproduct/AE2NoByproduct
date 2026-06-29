@@ -34,7 +34,12 @@ public final class ByproductStore extends SavedData {
         ByproductStore store = new ByproductStore();
         CompoundTag map = tag.getCompound(KEY);
         for (String id : map.getAllKeys()) {
-            store.toggles.put(UUID.fromString(id), map.getBoolean(id));
+            // Skip a corrupted key rather than letting one bad UUID abort the whole load.
+            try {
+                store.toggles.put(UUID.fromString(id), map.getBoolean(id));
+            } catch (IllegalArgumentException e) {
+                CommonMod.LOGGER.warn("Ignoring malformed byproduct toggle UUID '{}' in saved data", id);
+            }
         }
         return store;
     }
