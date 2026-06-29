@@ -53,7 +53,7 @@ Already have patterns encoded with byproducts? The mod also includes a **Byprodu
 
 > 1.21.1 is NeoForge only, because Applied Energistics 2 has no Fabric or Forge build for 1.21.1.
 
-> AE2 itself depends on GuideME. If you already have AE2 installed, GuideME is already present, so no additional action is needed.
+> AE2 requires **GuideME**. On 1.20.1 it ships inside AE2; on 1.21.1 GuideME is a separate mod that AE2 depends on, which CurseForge and Modrinth install automatically alongside AE2. Either way, having AE2 covers it, with no separate download needed.
 
 All loaders and versions are built from the same single codebase using the Stonecraft Gradle plugin (Stonecutter + Architectury Loom).
 

@@ -70,7 +70,7 @@ The button disappears and every player's processing patterns are stripped automa
 | **1.20.1** | Forge 47.x, or Fabric (Loader 0.16+ with Fabric API) | 15.4.x | 17 |
 | **1.21.1** | NeoForge 21.1.x | 19.2.x | 21 |
 
-*(AE2 already depends on GuideME, so if you have AE2, you're set.)*
+*(AE2 requires **GuideME**: bundled inside AE2 on 1.20.1, and a separate mod that CurseForge and Modrinth auto-install with AE2 on 1.21.1. Either way, having AE2 covers it.)*
 
 1.21.1 is NeoForge only, because Applied Energistics 2 has no Fabric or Forge build for 1.21.1.
 
