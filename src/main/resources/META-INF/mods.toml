@@ -1,0 +1,47 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/AE2NoByproduct/AE2NoByproduct/issues"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+authors = "ErikCodes"
+description = '''
+${description}
+'''
+
+# Shared server-side stripping mixin + client toolbar button mixins. Same configs on every loader.
+[[mixins]]
+config = "ae2nobyproduct.mixins.json"
+[[mixins]]
+config = "ae2nobyproduct.client.mixins.json"
+
+[[dependencies.${id}]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${id}]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,1.20.2)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${id}]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.2.14,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${id}]]
+modId = "ae2"
+mandatory = true
+versionRange = "[15,)"
+ordering = "AFTER"
+side = "BOTH"
